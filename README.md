@@ -1,3 +1,14 @@
+Customized maxLeft, minLeft, maxTop, minTop properties.
+If you specify the coordinates, the DraggableView will not be able to move out.
+
+And, "move" event listener added.
+ex. draggableView.addEventListener('move', function(e){});
+
+
+
+...Axis? I did not test :P
+
+
 Demo Video:
 
 http://www.screenr.com/S3as

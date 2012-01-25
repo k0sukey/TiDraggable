@@ -48,8 +48,8 @@
 	height = frame.size.height;
 
 	// minTop and minLeft are the origin of the view
-	minTop = frame.origin.y;
-	minLeft = frame.origin.x;
+//	minTop = frame.origin.y;
+//	minLeft = frame.origin.x;
 
 }
 
@@ -128,51 +128,49 @@
 	// get the center of the view to see in chich direction we're moving (after the move)
 	newLeft = self.center.x;
 	newTop = self.center.y;
+
+	if([self.proxy _hasListeners:@"move"])
+	{
+		NSDictionary *tiProps = [NSDictionary dictionaryWithObjectsAndKeys:
+									[NSNumber numberWithFloat:self.frame.origin.x], @"left",
+									[NSNumber numberWithFloat:self.frame.origin.y], @"top",
+									[self _center], @"center",
+									nil];
+		[self.proxy fireEvent:@"move" withObject:tiProps];
+	}
 }
 
 // touchEnd event
 -(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {	
 	// get the coordinates of the view
-	
 	left = self.frame.origin.x;
 	top = self.frame.origin.y;
-	
+
 	// do this is the view has moved:
 	if(hasMoved == true)
 	{
 		// IF we have a maxLeft, reposition, reposition accordingly
-		if(oldLeft > newLeft && maxLeft)
-		{
-			left = minLeft;
-		}
-		else if(maxLeft)
+		if(left > maxLeft)
 		{
 			left = maxLeft;
 		}
-	
-		// IF we have a maxTop, reposition accordingly
-		if(oldTop > newTop && maxTop)
+		else if(left < minLeft)
 		{
-			top = minTop;
+			left = minLeft;
 		}
-		else if(maxTop)
+
+		// IF we have a maxTop, reposition accordingly
+		if(top > maxTop)
 		{
 			top = maxTop;
 		}
-	} else {
-		
-		// if the view has NOT moved, move it (like a click event)
-		if(maxTop)
+		else if(top < minTop)
 		{
-			top = top == maxTop ? minTop : maxTop;
-		}
-		if(maxLeft)
-		{
-			left = left == maxLeft ? minLeft : maxLeft;
+			top = minTop;
 		}
 	}
-	
+
 	// animate the view
 	[UIView beginAnimations:@"end_dragging" context:nil];
 	[UIView setAnimationDelegate:self];
@@ -180,10 +178,8 @@
 	self.frame = CGRectMake(left, top, width, height);	
 	[UIView commitAnimations];
 	
-	
 	// reset the hasMoved flag
 	hasMoved = false;
-
 }
 
 - (void)finishAnimation:(NSString *)animationId finished:(BOOL)finished context:(void *)context
@@ -191,8 +187,8 @@
 	if([self.proxy _hasListeners:@"end"])
 	{
 		NSDictionary *tiProps = [NSDictionary dictionaryWithObjectsAndKeys:
-									[NSNumber numberWithFloat:left], @"left",
-									[NSNumber numberWithFloat:top], @"top",
+									[NSNumber numberWithFloat:self.frame.origin.x], @"left",
+									[NSNumber numberWithFloat:self.frame.origin.y], @"top",
 									[self _center], @"center",
 									nil];
 		[self.proxy fireEvent:@"end" withObject:tiProps];								
