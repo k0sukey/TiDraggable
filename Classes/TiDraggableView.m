@@ -150,24 +150,47 @@
 	// do this is the view has moved:
 	if(hasMoved == true)
 	{
-		// IF we have a maxLeft, reposition, reposition accordingly
-		if(left > maxLeft)
+		if(adsorb)
 		{
-			left = maxLeft;
-		}
-		else if(left < minLeft)
-		{
-			left = minLeft;
-		}
+			if(left > maxLeft * 0.5)
+			{
+				left = maxLeft;
+			}
+			else
+			{
+				left = minLeft;
+			}
 
-		// IF we have a maxTop, reposition accordingly
-		if(top > maxTop)
-		{
-			top = maxTop;
+			if(top > maxTop * 0.5)
+			{
+				top = maxTop;
+			}
+			else
+			{
+				top = minTop;
+			}
 		}
-		else if(top < minTop)
+		else
 		{
-			top = minTop;
+			// IF we have a maxLeft, reposition, reposition accordingly
+			if(left > maxLeft)
+			{
+				left = maxLeft;
+			}
+			else if(left < minLeft)
+			{
+				left = minLeft;
+			}
+
+			// IF we have a maxTop, reposition accordingly
+			if(top > maxTop)
+			{
+				top = maxTop;
+			}
+			else if(top < minTop)
+			{
+				top = minTop;
+			}
 		}
 	}
 
@@ -179,7 +202,7 @@
 	[UIView commitAnimations];
 	
 	// reset the hasMoved flag
-	hasMoved = false;
+//	hasMoved = false;
 }
 
 - (void)finishAnimation:(NSString *)animationId finished:(BOOL)finished context:(void *)context
@@ -190,10 +213,12 @@
 									[NSNumber numberWithFloat:self.frame.origin.x], @"left",
 									[NSNumber numberWithFloat:self.frame.origin.y], @"top",
 									[self _center], @"center",
+									[NSNumber numberWithBool:hasMoved], @"hasMoved",
 									nil];
 		[self.proxy fireEvent:@"end" withObject:tiProps];								
 	}
-	
+
+	hasMoved = false;	
 }
 
 // ========================================================================
@@ -204,6 +229,12 @@
 {
 	ENSURE_SINGLE_ARG(args, NSString);
 	axis = args;
+}
+
+-(void)setAdsorb_:(id)args
+{
+//	ENSURE_SINGLE_ARG(args, BOOL);
+	adsorb = [TiUtils boolValue:args];
 }
 
 -(void)setMaxTop_:(id)args
@@ -229,6 +260,5 @@
 	ENSURE_SINGLE_ARG(args, NSNumber);
 	minLeft = [TiUtils floatValue:args];
 }
-
 
 @end

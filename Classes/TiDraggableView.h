@@ -51,7 +51,8 @@
 	float minTop;
 	
 	NSString *axis;
-	
+
+	BOOL adsorb;	
 	bool hasMoved;
 }
 

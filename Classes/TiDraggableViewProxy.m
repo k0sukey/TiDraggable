@@ -21,5 +21,4 @@
 
 @implementation TiDraggableViewProxy
 
-
 @end
