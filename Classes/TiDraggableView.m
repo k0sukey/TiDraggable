@@ -150,8 +150,9 @@
 	// do this is the view has moved:
 	if(hasMoved == true)
 	{
-		if(adsorb)
+		if(adsorb == 1)
 		{
+			// adsorb corner
 			if(left > maxLeft * 0.5)
 			{
 				left = maxLeft;
@@ -169,6 +170,52 @@
 			{
 				top = minTop;
 			}
+		}
+		else if(adsorb == 2)
+		{
+			// adsorb vertical
+			if(left > maxLeft)
+			{
+				left = maxLeft;
+			}
+			else if(left < minLeft)
+			{
+				left = minLeft;
+			}
+
+			if(top > maxTop * 0.5)
+			{
+				top = maxTop;
+			}
+			else
+			{
+				top = minTop;
+			}
+		}
+		else if(adsorb == 3)
+		{
+			// adsorb horizontal
+			if(left > maxLeft * 0.5)
+			{
+				left = maxLeft;
+			}
+			else
+			{
+				left = minLeft;
+			}
+
+			if(top > maxTop)
+			{
+				top = maxTop;
+			}
+			else if(top < minTop)
+			{
+				top = minTop;
+			}
+		}
+		else if(adsorb == 4)
+		{
+			// adsorb specified
 		}
 		else
 		{
@@ -233,8 +280,8 @@
 
 -(void)setAdsorb_:(id)args
 {
-//	ENSURE_SINGLE_ARG(args, BOOL);
-	adsorb = [TiUtils boolValue:args];
+	ENSURE_SINGLE_ARG(args, NSNumber);
+	adsorb = [TiUtils intValue:args];
 }
 
 -(void)setMaxTop_:(id)args

@@ -1,4 +1,6 @@
-New feature "adsorb" support
+Reconstruct adsorb propertie.
+
+New feature "adsorb" support.
 
 Customized maxLeft, minLeft, maxTop, minTop properties.
 If you specify the coordinates, the DraggableView will not be able to move out.
@@ -9,33 +11,34 @@ ex. draggableView.addEventListener('move', function(e){});
 "adsorb" propertie is...
 The adsorption to the top/left, max/min coordinates.
 
-example app.js
-var window = Ti.UI.createWindow({
-    navBarHidden: true
-});
+### example app.js ###
+	var window = Ti.UI.createWindow({
+	    navBarHidden: true
+	});
+	
+	var draggable = require('ti.draggable');
 
-var draggable = require('ti.draggable');
-var view = draggable.createView({
-    top: window.height * 0.5 - 24,
-    left: window.width * 0.5 - 24,
-    width: 48,
-    height: 48,
-    minTop: 0,
-    minLeft: 0,
-    maxTop: window.height - 48,
-    maxLeft: window.width - 48,
-    adsorb: true,
-    backgroundColor: '#f00',
-    borderRadius: 24,
-    opacity: 0.9
-});
-window.add(view);
-
-view.addEventListener('end', function(e){
-    Ti.API.info(e);
-});
-
-window.open();
+	var view = draggable.createView({
+	    top: window.height * 0.5 - 24,
+	    left: window.width * 0.5 - 24,
+	    width: 48,
+	    height: 48,
+	    minTop: 0,
+	    minLeft: 0,
+	    maxTop: window.height - 48,
+	    maxLeft: window.width - 48,
+	    adsorb: draggable.ADSORB_NONE, // ADSORB_NONE,ADSORB_CORNER,ADSORB_VERTICAL,ADSORB_HORIZONTAL,(ADSORB_SPECIFIED yet...)
+	    backgroundColor: '#f00',
+	    borderRadius: 24,
+	    opacity: 0.9
+	});
+	window.add(view);
+	
+	view.addEventListener('end', function(e){
+	    Ti.API.info(e);
+	});
+	
+	window.open();
 
 
 

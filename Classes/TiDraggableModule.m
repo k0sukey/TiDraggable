@@ -20,6 +20,12 @@
 
 @implementation TiDraggableModule
 
+MAKE_SYSTEM_PROP(ADSORB_DISABLED, 0);
+MAKE_SYSTEM_PROP(ADSORB_CORNER, 1);
+MAKE_SYSTEM_PROP(ADSORB_VERTICAL, 2);
+MAKE_SYSTEM_PROP(ADSORB_HORIZONTAL, 3);
+MAKE_SYSTEM_PROP(ADSORB_SPECIFIED, 4);
+
 #pragma mark Internal
 
 // this is generated for your module, please do not change it

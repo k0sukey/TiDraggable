@@ -52,7 +52,8 @@
 	
 	NSString *axis;
 
-	BOOL adsorb;	
+	int adsorb;	
+
 	bool hasMoved;
 }
 

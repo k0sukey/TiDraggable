@@ -19,4 +19,10 @@
 {
 }
 
+@property(nonatomic,readonly) NSNumber *ADSORB_DISABLED;
+@property(nonatomic,readonly) NSNumber *ADSORB_CORNER;
+@property(nonatomic,readonly) NSNumber *ADSORB_VERTICAL;
+@property(nonatomic,readonly) NSNumber *ADSORB_HORIZONTAL;
+@property(nonatomic,readonly) NSNumber *ADSORB_SPECIFIED;
+
 @end
